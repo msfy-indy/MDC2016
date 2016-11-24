@@ -162,9 +162,7 @@ namespace MDCTest2016
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
-            Cmd.StopRun();
-            MessageBox.Show(CurvePictureBoxGrid.ActualHeight.ToString(""));
-            //System.Environment.Exit(0);
+            System.Environment.Exit(0);
         }
     }
 }

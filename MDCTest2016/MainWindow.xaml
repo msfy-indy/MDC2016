@@ -49,7 +49,7 @@
             <Label x:Name="DownLimitLabel"  Grid.Column="8" Grid.Row="0" Content="下限位" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"></Label>
             <Label x:Name="EmergencyStopLabel"  Grid.Column="9" Grid.Row="0" Content="紧急停机" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Foreground="Red"></Label>
             <Label x:Name="OverLoadLabel"  Grid.Column="10" Grid.Row="0" Content="超载"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"></Label>
-            <Button x:Name="BtnExit" Content="X" Grid.Column="11" Grid.Row="0" Click="BtnExit_Click" />
+            <Button x:Name="BtnExit" Content="X" Grid.Column="11" Grid.Row="0" Click="BtnExit_Click" Visibility="Hidden"/>
         </Grid>
         <Grid x:Name="RunningGrid" Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
