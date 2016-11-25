@@ -12,9 +12,8 @@ namespace MDCTest2016
     {
         #region 试验机参数
         public static string MachineName = "";
-        //用于控制下拉框的数量
-        //public static int NumOfChannel = 0;
 
+        public static int CommunicationMode = 0;
         //示值栏本体
         public static MDCTest2016.ShowValueGrid ShowValuePanel;
         //示值栏的内容
@@ -126,6 +125,7 @@ namespace MDCTest2016
                     ManufactorName = myReader["ManufactorName"].ToString();
                     LoadSensorNum = int.Parse(myReader["LastLoadSensorNum"].ToString());
                     DeformationNum = int.Parse(myReader["LastDeformationNum"].ToString());
+                    CommunicationMode= int.Parse(myReader["CommunicationMode"].ToString());
                 }
 
 
@@ -300,6 +300,26 @@ namespace MDCTest2016
                     {
                         return -1;
                     }
+            }
+        }
+
+        
+        /// <summary>
+        /// 由值得到码
+        /// </summary>
+        /// <param name="value">需要求码的值</param>
+        /// <param name="ch">通道号</param>
+        /// <returns></returns>
+        public static int GetCode(double value,int ch)
+        {
+            if (CaliMode[ch] == 0)
+            {
+                return (int)(value / ScaleValue[ch] * Math.Pow(-1, Datas.Symbol[ch]));
+            }
+            else
+            {
+                return -1;
+                //return GetCodeFromCaliList(v, ch);
             }
         }
     }

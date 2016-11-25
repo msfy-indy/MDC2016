@@ -56,6 +56,7 @@ namespace MDCTest2016
         #endregion
 
         #region 状态位
+        //力、位移、变形的实时速度
         public static double[] RealTimeSpeed = new double[3];
         //是否在线
         public static bool IsOnlie = false;

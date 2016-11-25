@@ -142,6 +142,14 @@ namespace MDCTest2016
                     {
                         Datas.FeedBackParam[Datas.FeedBackNum] = Datas.FeedBack;
                     }
+
+                    lock (Cmd.SendQueue)
+                    {
+                        if (Cmd.SendQueue.Count > 0)
+                        {
+                            Communication.Write(Cmd.SendQueue.Dequeue());
+                        }
+                    }
                 }
             }
 

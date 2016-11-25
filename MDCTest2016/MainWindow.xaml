@@ -9,10 +9,9 @@
         xmlns:local="clr-namespace:MDCTest2016"
         mc:Ignorable="d"
         Title="Minis MDCTest2016" 
-        Height="720" 
-        Width="1280" 
-        WindowStartupLocation="CenterScreen" 
-        WindowState="Maximized" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" >
+        Height="600" 
+        Width="800" 
+        WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" WindowState="Maximized" >
     <Grid x:Name="BackGroundGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -49,7 +48,7 @@
             <Label x:Name="DownLimitLabel"  Grid.Column="8" Grid.Row="0" Content="下限位" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"></Label>
             <Label x:Name="EmergencyStopLabel"  Grid.Column="9" Grid.Row="0" Content="紧急停机" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Foreground="Red"></Label>
             <Label x:Name="OverLoadLabel"  Grid.Column="10" Grid.Row="0" Content="超载"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red"></Label>
-            <Button x:Name="BtnExit" Content="X" Grid.Column="11" Grid.Row="0" Click="BtnExit_Click" Visibility="Hidden"/>
+            <Button x:Name="BtnExit" Content="X" Grid.Column="11" Grid.Row="0" Margin="12,0,12,0" Click="BtnExit_Click"/>
         </Grid>
         <Grid x:Name="RunningGrid" Grid.Column="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -70,12 +69,12 @@
             <Label x:Name="ContorlModeLabel"  Grid.Column="1" Grid.Row="1" Content="停" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
             <Label x:Name="TeleRunLabel"  Grid.Column="2" Grid.Row="1" Content="快上" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ></Label>
             <Label x:Name="TeleCMDLabel"  Grid.Column="3" Grid.Row="1" Content="负荷清零" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
-            <Label x:Name="OilPumpLabel"  Grid.Column="4" Grid.Row="1" Content="油泵开/油泵关" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ></Label>
-            <Label x:Name="HydraulicOperatLabel"  Grid.Column="5" Grid.Row="1" Content="加荷/快退" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
-            <Label x:Name="UpChuckLabel"  Grid.Column="6" Grid.Row="1" Content="上夹紧/上松开" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ></Label>
-            <Label x:Name="DownChuckLabel"  Grid.Column="7" Grid.Row="1" Content="下夹紧/下松开" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+            <Label x:Name="OilPumpLabel"  Grid.Column="4" Grid.Row="1" Content="油泵开/油泵关" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"   Visibility="Hidden"></Label>
+            <Label x:Name="HydraulicOperatLabel"  Grid.Column="5" Grid.Row="1" Content="加荷/快退" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"></Label>
+            <Label x:Name="UpChuckLabel"  Grid.Column="6" Grid.Row="1" Content="上夹紧/上松开" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"   Visibility="Hidden"></Label>
+            <Label x:Name="DownChuckLabel"  Grid.Column="7" Grid.Row="1" Content="下夹紧/下松开" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Visibility="Hidden"></Label>
             <Label x:Name="CalibrationLabel"  Grid.Column="8" Grid.Row="1" Content="校准" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  ></Label>
-            <Label x:Name="OpenValueLabel"  Grid.Column="9" Grid.Row="1" Content="开度值" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Label>
+            <Label x:Name="OpenValueLabel"  Grid.Column="9" Grid.Row="1" Content="开度值" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Hidden"></Label>
             <Label x:Name="TestTimeLabel"  Grid.Column="10" Grid.Row="1" Content="试验时间(s):"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
             <Label x:Name="ShowTestTimeLabel"  Grid.Column="11" Grid.Row="1" Content="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
         </Grid>
@@ -89,8 +88,8 @@
         </Grid>
         <Grid Grid.Column="0" Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="90*" />
-                <ColumnDefinition Width="10*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="120" />
             </Grid.ColumnDefinitions>
             <Grid x:Name="MainGrid" Grid.Column="0" Grid.Row="0" >
                 <TabControl x:Name="MaintabControl" TabStripPlacement="Bottom" HorizontalAlignment="Left" Height="{Binding ElementName=MainGrid,Path=ActualHeight}"  VerticalAlignment="Top" Width="{Binding ElementName=MainGrid ,Path=ActualWidth}">
@@ -100,8 +99,8 @@
                                 <TabItem x:Name="TestingTabBtn" Header="试验管理" Height="100" Width="36">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="7*" />
-                                            <ColumnDefinition Width="3*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="240" />
                                         </Grid.ColumnDefinitions>
                                         <Grid x:Name="CurvePictureBoxGrid"  Grid.Column="0" Grid.Row="0" Margin="4,4,4,4">
                                             <wfi:WindowsFormsHost>
@@ -167,16 +166,83 @@
                                     <Grid x:Name="TestProjectEdit">
                                         <TabControl x:Name="TestProjectTabControl" HorizontalAlignment="Left" Height="{Binding ElementName=TestProjectEdit,Path=ActualHeight}" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ElementName=TestProjectEdit,Path=ActualWidth}">
                                             <TabItem x:Name="TestProjectTabItem1" Header="试验属性" Height="36">
-                                                <Grid Background="#FFE5E5E5" />
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="8*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime"></Grid>
+                                                    <Grid  Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="6*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="OK"  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Next"  Grid.Row="0" Grid.Column="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Cancel"  Grid.Row="0" Grid.Column="3"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="TestProjectTabItem2" Header="试验步骤" Height="36">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="8*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime"></Grid>
+                                                    <Grid  Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="6*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="OK"  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Next"  Grid.Row="0" Grid.Column="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Cancel"  Grid.Row="0" Grid.Column="3"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="TestProjectTabItem3" Header="试验参数" Height="36">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="8*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime"></Grid>
+                                                    <Grid  Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="6*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="OK"  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Next"  Grid.Row="0" Grid.Column="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Cancel"  Grid.Row="0" Grid.Column="3"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="TestProjectTabItem4" Header="试验报告" Height="36">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="8*" />
+                                                        <RowDefinition Height="*" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime"></Grid>
+                                                    <Grid  Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="6*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="OK"  Grid.Row="0" Grid.Column="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                        <Button Content="Cancel"  Grid.Row="0" Grid.Column="3"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                         </TabControl>
                                     </Grid>
@@ -200,25 +266,822 @@
                         <Grid x:Name="MachineTabControlFatherGrid">
                             <TabControl x:Name="MachineTabControl" TabStripPlacement="Left" HorizontalAlignment="Left" Height="{Binding ElementName=MachineTabControlFatherGrid,Path=ActualHeight}" Width="{Binding ElementName=MachineTabControlFatherGrid,Path=ActualWidth}"  Margin="0,0,0,0" VerticalAlignment="Top" >
                                 <TabItem x:Name="MachineControlItem1" Header="设备" Width="36" Height="50">
-                                    <Grid Background="#FFE5E5E5"/>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="36" />
+                                        </Grid.RowDefinitions>
+                                        <Grid  Grid.Row="0" Grid.Column="0" Background="Lime">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Row="0" Grid.Column="0" Margin="4,4,4,4">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="5*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Label Content="设备管理"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <Grid Grid.Row="1" Grid.Column="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="名称："  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <TextBox  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="6,6,6,6" />
+                                                </Grid>
+                                                <Grid Grid.Row="2" Grid.Column="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="类型："  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    <ComboBox  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6">
+                                                        <ComboBoxItem  IsSelected="True">电拉</ComboBoxItem>
+                                                        <ComboBoxItem>液压</ComboBoxItem>
+                                                    </ComboBox>
+                                                </Grid>
+                                                <Grid Grid.Row="3" Grid.Column="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="试验空间："  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <Grid  Grid.Row="0" Grid.Column="1">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="*" />
+                                                        </Grid.RowDefinitions>
+                                                        <CheckBox Content="单空间" Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        <CheckBox Content="上空间拉" Grid.Row="1" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        <CheckBox Content="上空间压" Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        <CheckBox Content="下空间拉" Grid.Row="3" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                        <CheckBox Content="下空间压" Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                                    </Grid>
+                                                </Grid>
+                                                <Grid Grid.Row="4" Grid.Column="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Label Content="分辨率："  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                                                    <TextBox  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                </Grid>
+                                            </Grid>
+                                            <Grid Grid.Row="0" Grid.Column="1" Margin="4,4,4,4">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <Label Content="当前使用的负荷传感器"  Grid.Row="0" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <ComboBox  Grid.Row="1" Grid.Column="0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                <Label Content="当前使用的变形传感器"  Grid.Row="2" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <ComboBox  Grid.Row="3" Grid.Column="0"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                                <Label Content="当前通讯方式"  Grid.Row="4" Grid.Column="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                <Grid  Grid.Row="5" Grid.Column="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <RadioButton Content="USB"  Grid.Row="0" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                    <RadioButton Content="WIFI"  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                </Grid>
+
+
+                                            </Grid>
+                                        </Grid>
+                                        <Grid  Grid.Row="1" Grid.Column="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="7*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Button Content="OK"  Grid.Row="0" Grid.Column="1"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                            <Button Content="Cancel"  Grid.Row="0" Grid.Column="2"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="6,6,6,6"/>
+                                        </Grid>
+                                    </Grid>
+
                                 </TabItem>
                                 <TabItem x:Name="MachineControlItem2" Header="校准" Width="36"  Height="50">
                                     <Grid x:Name="CaliTabFatherGrid">
                                         <TabControl x:Name="CaliTabControl" HorizontalAlignment="Left" Height="{Binding ElementName=CaliTabFatherGrid,Path=ActualHeight}" Margin="0,0,0,0" VerticalAlignment="Top" Width="{Binding ElementName=CaliTabFatherGrid,Path=ActualWidth}">
                                             <TabItem x:Name="CaliTabItem1" Header="负荷" Height="36" Width="100">
-                                                <Grid Background="#FFE5E5E5" />
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="36" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="负荷传感器" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <ComboBox Grid.Row="1" Grid.Column="0"  Margin="4,4,4,4"/>
+                                                            <Grid Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="添加" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="移除" Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK" Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Label Content="安装位置" Grid.Row="3" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <RadioButton Content="上横梁" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="中横梁" Grid.Row="0" Grid.Column="1"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="下横梁" Grid.Row="0" Grid.Column="2"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="4*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="方向辨识" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="2*" />
+                                                                    <ColumnDefinition Width="3*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="方向辨识：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <Grid  Grid.Row="0" Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="4*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid Grid.Row="1" Grid.Column="0">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="*" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Button Content="开始" Margin="4,4,4,4" Grid.Row="0" Grid.Column="0"/>
+                                                                        <Button Content="OK" Margin="4,4,4,4" Grid.Row="0" Grid.Column="1"/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Label Content="缺省校准" Grid.Row="2" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="5" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="6" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="2">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="值校准" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="示值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Button Content="清零" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                    <Button Content="符号" Grid.Row="1" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                            </Grid>
+                                                            <Grid  Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid   Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="X"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="CaliTabItem2" Header="变形" Height="36" Width="100">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="36" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="负荷传感器" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <ComboBox Grid.Row="1" Grid.Column="0"  Margin="4,4,4,4"/>
+                                                            <Grid Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="添加" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="移除" Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK" Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Label Content="安装位置" Grid.Row="3" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <RadioButton Content="上横梁" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="中横梁" Grid.Row="0" Grid.Column="1"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="下横梁" Grid.Row="0" Grid.Column="2"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="4*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="方向辨识" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="2*" />
+                                                                    <ColumnDefinition Width="3*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="方向辨识：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <Grid  Grid.Row="0" Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="4*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid Grid.Row="1" Grid.Column="0">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="*" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Button Content="开始" Margin="4,4,4,4" Grid.Row="0" Grid.Column="0"/>
+                                                                        <Button Content="OK" Margin="4,4,4,4" Grid.Row="0" Grid.Column="1"/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Label Content="缺省校准" Grid.Row="2" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="5" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="6" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="2">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="值校准" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="示值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Button Content="清零" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                    <Button Content="符号" Grid.Row="1" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                            </Grid>
+                                                            <Grid  Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid   Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="X"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="CaliTabItem3" Header="位移" Height="36" Width="100">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="36" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid  Grid.Row="0" Grid.Column="0" Background="Lime">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="负荷传感器" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <ComboBox Grid.Row="1" Grid.Column="0"  Margin="4,4,4,4"/>
+                                                            <Grid Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="添加" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="移除" Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK" Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Label Content="安装位置" Grid.Row="3" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <RadioButton Content="上横梁" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="中横梁" Grid.Row="0" Grid.Column="1"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <RadioButton Content="下横梁" Grid.Row="0" Grid.Column="2"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="4*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="方向辨识" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="2*" />
+                                                                    <ColumnDefinition Width="3*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="方向辨识：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <Grid  Grid.Row="0" Grid.Column="1">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="4*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid Grid.Row="1" Grid.Column="0">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="*" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Button Content="开始" Margin="4,4,4,4" Grid.Row="0" Grid.Column="0"/>
+                                                                        <Button Content="OK" Margin="4,4,4,4" Grid.Row="0" Grid.Column="1"/>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Label Content="缺省校准" Grid.Row="2" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="5" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="看不清" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                            <Grid Grid.Row="6" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="2">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="值校准" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="示值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Button Content="清零" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                    <Button Content="符号" Grid.Row="1" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                            </Grid>
+                                                            <Grid  Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                <Button Content="看不清"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="4" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid   Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="X"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="CaliTabItem4" Header="大变形" Height="36" Width="100">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="36" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0" Grid.Column="0" Background="Lime">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <RadioButton Content="大变形上" Grid.Row="0" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="大变形下" Grid.Row="1" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="大变形" Grid.Row="2" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </Grid>
+                                                        <Grid  Grid.Row="0" Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="缺省校准：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准系数：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox Grid.Row="0" Grid.Column="1"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="4,4,4,4"/>
+                                                                <Label Content="mm/脉冲：" Grid.Row="0" Grid.Column="2"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="2">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="值校准" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="示值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Button Content="清零" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                    <Button Content="符号" Grid.Row="1" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                            </Grid>
+                                                            <Grid  Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid   Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="X"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                             <TabItem x:Name="CaliTabItem5" Header="扩展" Height="36" Width="100">
-                                                <Grid Background="#FFE5E5E5"/>
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="36" />
+                                                    </Grid.RowDefinitions>
+                                                    <Grid Grid.Row="0" Grid.Column="0" Background="Lime">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Row="0" Grid.Column="0">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <RadioButton Content="扩展1" Grid.Row="0" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="扩展2" Grid.Row="1" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="扩展3" Grid.Row="2" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="扩展4" Grid.Row="3" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="扩展5" Grid.Row="4" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <RadioButton Content="扩展6" Grid.Row="5" Grid.Column="0"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                        </Grid>
+                                                        <Grid  Grid.Row="0" Grid.Column="1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="缺省校准：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准系数：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox Grid.Row="0" Grid.Column="1"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="4,4,4,4"/>
+                                                                <Label Content="mm/脉冲：" Grid.Row="0" Grid.Column="2"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                        <Grid Grid.Row="0" Grid.Column="2">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                                <RowDefinition Height="*" />
+                                                            </Grid.RowDefinitions>
+                                                            <Label Content="值校准" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                            <Grid  Grid.Row="1" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="示值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                                <Grid Grid.Row="0" Grid.Column="2">
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="*" />
+                                                                    </Grid.RowDefinitions>
+                                                                    <Button Content="清零" Grid.Row="0" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                    <Button Content="符号" Grid.Row="1" Grid.Column="0" Margin="4,4,4,4"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid  Grid.Row="2" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Label Content="校准值：" Grid.Row="0" Grid.Column="0"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                                                <TextBox   Grid.Row="0" Grid.Column="1" Margin="4,4,4,4" />
+                                                            </Grid>
+                                                            <Grid  Grid.Row="3" Grid.Column="0">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                    <ColumnDefinition Width="*" />
+                                                                </Grid.ColumnDefinitions>
+                                                                <Button Content="OK"  Grid.Row="0" Grid.Column="2" Margin="4,4,4,4"/>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </Grid>
+                                                    <Grid   Grid.Row="1" Grid.Column="0">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="8*" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <Button Content="X"  Grid.Row="0" Grid.Column="1" Margin="4,4,4,4"/>
+                                                    </Grid>
+                                                </Grid>
                                             </TabItem>
                                         </TabControl>
                                     </Grid>
@@ -281,17 +1144,8 @@
                                     <RowDefinition Height="1*" />
                                     <RowDefinition Height="1*" />
                                 </Grid.RowDefinitions>
-                                <Grid  Grid.Row="0" Grid.Column="0" Margin="4,4,4,4">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="1*" />
-                                        <RowDefinition Height="1*" />
-                                    </Grid.RowDefinitions>
-                                    <Grid x:Name="PosiSpeedQuickyInputGrid" Grid.Row="0" Grid.Column="0">
-                                        <TextBox x:Name="PosiSpeedQuickyInputTextBox" Text="10"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-                                    </Grid>
-                                    <Grid x:Name="PosiSpeedSelectComboBoxGrid"  Grid.Row="1" Grid.Column="0">
-                                        <ComboBox x:Name="PosiSpeedSelectComboBox" HorizontalAlignment="Left" Height="{Binding ElementName=PosiSpeedSelectComboBoxGrid ,Path=ActualHeight}" VerticalAlignment="Top" Width="{Binding ElementName=PosiSpeedSelectComboBoxGrid,Path=ActualWidth}"/>
-                                    </Grid>
+                                <Grid x:Name="PosiSpeedSelectComboBoxGrid"  Grid.Row="0" Grid.Column="0" Margin="4,4,4,4">
+                                    <ComboBox x:Name="PosiSpeedSelectComboBox" IsEditable="True" HorizontalAlignment="Center" VerticalContentAlignment="Center" Height="{Binding ElementName=PosiSpeedSelectComboBoxGrid ,Path=ActualHeight}" VerticalAlignment="Top" Width="{Binding ElementName=PosiSpeedSelectComboBoxGrid,Path=ActualWidth}"/>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.Column="0" Margin="4,4,4,4" Background="Beige">
                                     <Label Content="mm/min"   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  />
@@ -309,8 +1163,8 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Grid Grid.Row="0" Grid.Column="0" Margin="4,4,4,4">
-                        <Image x:Name="image" HorizontalAlignment="Left" Height="14" VerticalAlignment="Top" Width="45"/>
+                    <Grid x:Name="StopRunBtnGrid" Grid.Row="0" Grid.Column="0"  Margin="4,4,4,4" Background="Red">
+                        <Label  Content="stop" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MouseDown="Label_MouseDown"/>
                     </Grid>
                 </Grid>
             </Grid>

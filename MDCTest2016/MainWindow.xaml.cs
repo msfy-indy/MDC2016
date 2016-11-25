@@ -26,33 +26,65 @@ namespace MDCTest2016
         public MainWindow()
         {
             InitializeComponent();
+            InitSoftware();
+        }
+
+        private void InitSoftware()
+        {
             this.Icon = new BitmapImage(new Uri("./icon/MainWindowLogo.ico", UriKind.RelativeOrAbsolute));
-
-            Communication.EstablishCommunication(0);
-
             Sensor.InitMachine();
-
-
-
-            System.Threading.ThreadPool.QueueUserWorkItem(GetAndAnalysisData.GetData, null);
-            timer = new System.Windows.Threading.DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(100);
-            timer.Tick += RefreshUI;
-            timer.Start();
-
-            //Sensor.ShowValuePanel = new MDCTest2016.ShowValueGrid(4, null, null);
             Sensor.ShowValuePanel.SetValue(Grid.ColumnProperty, 0);
             Sensor.ShowValuePanel.SetValue(Grid.RowProperty, 2);
             this.BackGroundGrid.Children.Add(Sensor.ShowValuePanel);
-
-
+            Communication.EstablishCommunication(Sensor.CommunicationMode);
+            System.Threading.ThreadPool.QueueUserWorkItem(GetAndAnalysisData.GetData, null);
+            switch (Sensor.CommunicationMode)
+            {
+                case 0:
+                    {
+                        this.CommunicationModeLabel.Content = "USB通讯";
+                        break;
+                    }
+                case 1:
+                    {
+                        this.CommunicationModeLabel.Content = "HID通讯";
+                        break;
+                    }
+                case 2:
+                    {
+                        this.CommunicationModeLabel.Content = "WIFI通讯";
+                        break;
+                    }
+                default:
+                    {
+                        this.CommunicationModeLabel.Content = "USB通讯";
+                        break;
+                    }
+            }
+            timer = new System.Windows.Threading.DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Tick += this.RefreshUI;
+            timer.Start();
         }
 
         public void RefreshUI(object sender, EventArgs e)
         {
+            this.ShowSystemInformation();
+            this.ShowValues();
+        }
+
+        private void ShowSystemInformation()
+        {
             if (!Datas.IsOnlie)
             {
+                this.CommunicatingLabel.Visibility = System.Windows.Visibility.Visible;
+                this.CommunicatingLabel.Content = "通讯断开";
+                this.EnableLabel.Visibility = System.Windows.Visibility.Hidden;
                 return;
+            }
+            else
+            {
+                this.CommunicatingLabel.Visibility = System.Windows.Visibility.Hidden;
             }
             if (Datas.UpLimit)
             {
@@ -62,6 +94,59 @@ namespace MDCTest2016
             {
                 this.UplimitLabel.Visibility = System.Windows.Visibility.Hidden;
             }
+            if (Datas.LowLimit)
+            {
+                this.DownLimitLabel.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.DownLimitLabel.Visibility = System.Windows.Visibility.Hidden;
+            }
+            if (Datas.EmergencyStop)
+            {
+                this.EmergencyStopLabel.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.EmergencyStopLabel.Visibility = System.Windows.Visibility.Hidden;
+            }
+            if (Datas.IsOverLoad)
+            {
+                this.OverLoadLabel.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.OverLoadLabel.Visibility = System.Windows.Visibility.Hidden;
+            }
+            if (Datas.Day<0xffff)
+            {
+                if (Datas.Day>0)
+                {
+                    this.EnableLabel.Visibility = System.Windows.Visibility.Visible;
+                    this.EnableLabel.Content = "可使用"+Datas.Day.ToString()+"天";
+                }
+                else
+                {
+                    this.EnableLabel.Visibility = System.Windows.Visibility.Visible;
+                    this.EnableLabel.Content = "禁止使用";
+                }
+            }
+            else
+            {
+                this.EnableLabel.Visibility= System.Windows.Visibility.Hidden;
+            }
+            if (Datas.IsCali)
+            {
+                this.CalibrationLabel.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.CalibrationLabel.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        private void ShowValues()
+        {
             foreach (var item in Sensor.ShowValuePanel.ValueGrid)
             {
                 string Modi = "0.";
@@ -71,7 +156,15 @@ namespace MDCTest2016
                 }
                 item.ValueLabel.Content = Sensor.GetValue(item.ChannelNum).ToString(Modi);
             }
-            this.ShowTestTimeLabel.Content = Datas.Code[0].ToString();
+            if (Datas.IsRunning)
+            {
+                this.PosiSpeedLabel.Content = double.Parse(Math.Abs(Datas.SpeedCode[1] * Sensor.ScaleValue[1]).ToString("G3")).ToString();
+            }
+            else
+            {
+                this.PosiSpeedLabel.Content = "0";
+            }
+            
         }
 
         private void ReInitUI()
@@ -141,12 +234,12 @@ namespace MDCTest2016
             this.TestStepFlexGrid.Cell(0, 0).Text = "步骤号";
             this.TestStepFlexGrid.Cell(0, 1).Text = "内容";
 
-            this.InputGrid.Column(0).Width = 130;
-            this.InputGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 150);
+            this.InputGrid.Column(0).Width = 100;
+            this.InputGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 120);
             this.InputGrid.Cell(0, 0).Text = "输入项";
             this.InputGrid.Cell(0, 1).Text = "内容";
 
-            this.ResultGrid.Column(0).Width = 130;
+            this.ResultGrid.Column(0).Width = 100;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -162,7 +255,14 @@ namespace MDCTest2016
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
-            System.Environment.Exit(0);
+            Datas.IsCali = !Datas.IsCali;
+            
+            //System.Environment.Exit(0);
+        }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Cmd.StopRun();
         }
     }
 }
