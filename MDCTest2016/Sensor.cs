@@ -17,7 +17,7 @@ namespace MDCTest2016
         //示值栏本体
         public static MDCTest2016.ShowValueGrid ShowValuePanel;
         //示值栏的内容
-        public static List<int> ChannelOfShowValuePanel=new List<int>();
+        public static List<int> ChannelOfShowValuePanel = new List<int>();
         //厂家名
         public static string ManufactorName = "";
 
@@ -29,11 +29,10 @@ namespace MDCTest2016
 
         #region 负荷传感器相关
         //使用空间能否使用.若为拉压同向时，以中横梁上空间为参考
-        //0-上横梁，1-中上，2-中下，3-下横梁
-        public static bool WorkSpaceTop;
-        public static bool WorkSpaceMidUp;
-        public static bool WorkSpaceMidDown;
-        public static bool WorkSpaceBottom;
+        public static int WorkSpaceTop;
+        public static int WorkSpaceMidUp;
+        public static int WorkSpaceMidDown;
+        public static int WorkSpaceBottom;
         #endregion
 
         //引伸计标距
@@ -72,7 +71,7 @@ namespace MDCTest2016
             }
             */
         #endregion
-            
+
         //单位名、通道名和设备名 从0开始分别是力，位移，变形，大变形上，大变形下，扩展1-6
         public static string[] UnitName = new string[11];
         public static string[] DevName = new string[15];
@@ -91,13 +90,13 @@ namespace MDCTest2016
         public static float[] Sensitivity = new float[11];
 
         //校准表，以及校准方式从0开始分别是力，位移，变形，大变形上，大变形下，扩展1-6
-        public static List<float[]>[] CaliList= new List<float[]>[11];
+        public static List<float[]>[] CaliList = new List<float[]>[11];
 
         //校准方式,0-缺省校准，1-物理校准
-        public static int[] CaliMode=new int[11];
+        public static int[] CaliMode = new int[11];
 
         //缺省校准系数从0开始分别是力，位移，变形，大变形上，大变形下，扩展1-6
-        public static double[] ScaleValue=new double[11];
+        public static double[] ScaleValue = new double[11];
 
         //初始化机器
         public static void InitMachine()
@@ -108,10 +107,11 @@ namespace MDCTest2016
             }
             try
             {
+                int jsq = 0;
                 string connstr; string sql;
                 OleDbCommand mycom;
                 OleDbDataReader myReader;
-                OleDbConnection mycon; 
+                OleDbConnection mycon;
 
                 connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Machine.accdb;Persist Security Info=False;";
                 mycon = new OleDbConnection(connstr);
@@ -121,11 +121,23 @@ namespace MDCTest2016
                 myReader = mycom.ExecuteReader();
                 while (myReader.Read())
                 {
-                    MachineName=myReader["MachineName"].ToString();
+                    MachineName = myReader["MachineName"].ToString();
                     ManufactorName = myReader["ManufactorName"].ToString();
+                    CommunicationMode = int.Parse(myReader["CommunicationMode"].ToString());
+                    for (int i = 0; i < FullCode.Length; i++)
+                    {
+                        FullCode[i] = int.Parse(myReader["FullCode"].ToString());
+                    }
+                }
+
+                sql = "select * from LastUsedInfomation";
+                mycom = new OleDbCommand(sql, mycon);
+                myReader = mycom.ExecuteReader();
+                while (myReader.Read())
+                {
                     LoadSensorNum = int.Parse(myReader["LastLoadSensorNum"].ToString());
                     DeformationNum = int.Parse(myReader["LastDeformationNum"].ToString());
-                    CommunicationMode= int.Parse(myReader["CommunicationMode"].ToString());
+                    TestRunContrl.TestProjectSelectedIndex = int.Parse(myReader["LastTestProjectIndex"].ToString());
                 }
 
 
@@ -134,60 +146,37 @@ namespace MDCTest2016
                 myReader = mycom.ExecuteReader();
                 while (myReader.Read())
                 {
-                    ChannelOfShowValuePanel.Add(int.Parse( myReader["channel"].ToString()));
+                    ChannelOfShowValuePanel.Add(int.Parse(myReader["channel"].ToString()));
                 }
 
                 mycon.Close();
 
-                connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Channel0-"+ LoadSensorNum + ".accdb;Persist Security Info=False;";
+                connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Channel0.accdb;Persist Security Info=False;";
                 mycon = new OleDbConnection(connstr);
                 mycon.Open();
                 sql = "select * from SensorInformation";
                 mycom = new OleDbCommand(sql, mycon);
                 myReader = mycom.ExecuteReader();
+                jsq = 0;
                 while (myReader.Read())
                 {
-                    FullScale[0] = int.Parse(myReader["FullScale"].ToString());
-                    Sensitivity[0] = float.Parse(myReader["Sensitivity"].ToString());
-                    ScaleValue[0] = float.Parse(myReader["ScaleValue"].ToString());
-                    CaliMode[0] = int.Parse(myReader["CaliMode"].ToString());
-                    DevName[0] = myReader["DevName"].ToString();
-                    Channel[0]= myReader["ChannelName"].ToString();
-                    /*
-                    WorkSpaceTop = int.Parse(myReader["WorkSpaceTop"].ToString());
-                    WorkSpaceMidUp = int.Parse(myReader["WorkSpaceMidUp"].ToString());
-                    WorkSpaceMidDown = int.Parse(myReader["WorkSpaceMidDown"].ToString());
-                    WorkSpaceBottom = int.Parse(myReader["WorkSpaceBottom"].ToString());
-                    */
-                    UnitName[0]= myReader["UnitName"].ToString();
-                    DecimalPoint[0] = int.Parse(myReader["DecimalPoint"].ToString());
-                    UnitCoefficient[0] = 1;
-                }
-                mycon.Close();
-
-                connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Channel2-" + DeformationNum + ".accdb;Persist Security Info=False;";
-                mycon = new OleDbConnection(connstr);
-                mycon.Open();
-                sql = "select * from SensorInformation";
-                mycom = new OleDbCommand(sql, mycon);
-                myReader = mycom.ExecuteReader();
-                while (myReader.Read())
-                {
-                    FullScale[2] = int.Parse(myReader["FullScale"].ToString());
-                    Sensitivity[2] = float.Parse(myReader["Sensitivity"].ToString());
-                    ScaleValue[2] = float.Parse(myReader["ScaleValue"].ToString());
-                    CaliMode[2] = int.Parse(myReader["CaliMode"].ToString());
-                    DevName[2] = myReader["DevName"].ToString();
-                    /*
-                    WorkSpaceTop = int.Parse(myReader["WorkSpaceTop"].ToString());
-                    WorkSpaceMidUp = int.Parse(myReader["WorkSpaceMidUp"].ToString());
-                    WorkSpaceMidDown = int.Parse(myReader["WorkSpaceMidDown"].ToString());
-                    WorkSpaceBottom = int.Parse(myReader["WorkSpaceBottom"].ToString());
-                    */
-                    UnitName[2] = myReader["UnitName"].ToString();
-                    DecimalPoint[2] = int.Parse(myReader["DecimalPoint"].ToString());
-                    Channel[2] = myReader["ChannelName"].ToString();
-                    UnitCoefficient[2] = 1;
+                    if (jsq == LoadSensorNum)
+                    {
+                        FullScale[0] = int.Parse(myReader["FullScale"].ToString());
+                        Sensitivity[0] = float.Parse(myReader["Sensitivity"].ToString());
+                        ScaleValue[0] = float.Parse(myReader["ScaleValue"].ToString());
+                        CaliMode[0] = int.Parse(myReader["CaliMode"].ToString());
+                        DevName[0] = myReader["DevName"].ToString();
+                        Channel[0] = myReader["ChannelName"].ToString();
+                        WorkSpaceTop = int.Parse(myReader["WorkSpaceTop"].ToString());
+                        WorkSpaceMidUp = int.Parse(myReader["WorkSpaceMidUp"].ToString());
+                        WorkSpaceMidDown = int.Parse(myReader["WorkSpaceMidDown"].ToString());
+                        WorkSpaceBottom = int.Parse(myReader["WorkSpaceBottom"].ToString());
+                        UnitName[0] = myReader["UnitName"].ToString();
+                        DecimalPoint[0] = int.Parse(myReader["DecimalPoint"].ToString());
+                        UnitCoefficient[0] = 1;
+                    }
+                    jsq = jsq + 1;
                 }
                 mycon.Close();
 
@@ -201,10 +190,39 @@ namespace MDCTest2016
                 {
                     DecimalPoint[1] = int.Parse(myReader["DecimalPoint"].ToString());
                     UnitCoefficient[1] = 1;
-                    ScaleValue[1]= double.Parse(myReader["ScaleValue"].ToString());
-                    DevName[1]= myReader["DevName"].ToString();
+                    ScaleValue[1] = double.Parse(myReader["ScaleValue"].ToString());
+                    DevName[1] = myReader["DevName"].ToString();
                     UnitName[1] = myReader["UnitName"].ToString();
                     Channel[1] = myReader["ChannelName"].ToString();
+                }
+                mycon.Close();
+
+                connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Channel2.accdb;Persist Security Info=False;";
+                mycon = new OleDbConnection(connstr);
+                mycon.Open();
+                sql = "select * from SensorInformation";
+                mycom = new OleDbCommand(sql, mycon);
+                myReader = mycom.ExecuteReader();
+                jsq = 0;
+                while (myReader.Read())
+                {
+                    if (jsq == DeformationNum)
+                    {
+                        FullScale[2] = int.Parse(myReader["FullScale"].ToString());
+                        Sensitivity[2] = float.Parse(myReader["Sensitivity"].ToString());
+                        ScaleValue[2] = float.Parse(myReader["ScaleValue"].ToString());
+                        CaliMode[2] = int.Parse(myReader["CaliMode"].ToString());
+                        DevName[2] = myReader["DevName"].ToString();
+                        WorkSpaceUpPositive = int.Parse(myReader["WorkSpaceUpPositive"].ToString());
+                        WorkSpaceUpNegative = int.Parse(myReader["WorkSpaceUpNegative"].ToString());
+                        WorkSpaceDownPositive = int.Parse(myReader["WorkSpaceDownPositive"].ToString());
+                        WorkSpaceDownNegative = int.Parse(myReader["WorkSpaceDownNegative"].ToString());
+                        UnitName[2] = myReader["UnitName"].ToString();
+                        DecimalPoint[2] = int.Parse(myReader["DecimalPoint"].ToString());
+                        Channel[2] = myReader["ChannelName"].ToString();
+                        UnitCoefficient[2] = 1;
+                    }
+                    jsq = jsq + 1;
                 }
                 mycon.Close();
 
@@ -245,14 +263,14 @@ namespace MDCTest2016
                 connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Ext.accdb;Persist Security Info=False;";
                 mycon = new OleDbConnection(connstr);
                 mycon.Open();
-                sql = "select * from SensorInformation ";
+                sql = "select * from SensorInformation";
                 mycom = new OleDbCommand(sql, mycon);
                 myReader = mycom.ExecuteReader();
                 while (myReader.Read())
                 {
                     int ExtNum = int.Parse(myReader["ID"].ToString());
                     ExtNum = ExtNum + 4;
-                    ScaleValue[ExtNum]= double.Parse(myReader["ScaleValue"].ToString());
+                    ScaleValue[ExtNum] = double.Parse(myReader["ScaleValue"].ToString());
                     UnitName[ExtNum] = myReader["UnitName"].ToString();
                     DecimalPoint[ExtNum] = int.Parse(myReader["DecimalPoint"].ToString());
                     UnitCoefficient[ExtNum] = 1;
@@ -261,13 +279,57 @@ namespace MDCTest2016
                     Channel[ExtNum] = myReader["ChannelName"].ToString();
                 }
                 mycon.Close();
-
                 InitShowValuePanel();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("初始化设备时失败！\n错误信息：" + ex.Message, "警告");
             }
+        }
+
+        public static List<string> AddLoadSensorListToCombox()
+        {
+            string connstr;
+            string sql;
+            OleDbCommand mycom;
+            OleDbDataReader myReader;
+            OleDbConnection mycon;
+            List<string> ls = new List<string>();
+
+            connstr = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=./Sensor/Channel0.accdb;Persist Security Info=False;";
+            mycon = new OleDbConnection(connstr);
+            mycon.Open();
+            sql = "select * from SensorInformation";
+            mycom = new OleDbCommand(sql, mycon);
+            myReader = mycom.ExecuteReader();
+            string devname = "";
+            int WorkSpaceTop_=0, WorkSpaceMidUp_ = 0, WorkSpaceMidDown_ = 0, WorkSpaceBottom_ = 0;
+            while (myReader.Read())
+            {
+                devname = myReader["DevName"].ToString();
+                WorkSpaceTop_ = int.Parse(myReader["WorkSpaceTop"].ToString());
+                WorkSpaceMidUp_ = int.Parse(myReader["WorkSpaceMidUp"].ToString());
+                WorkSpaceMidDown_ = int.Parse(myReader["WorkSpaceMidDown"].ToString());
+                WorkSpaceBottom_ = int.Parse(myReader["WorkSpaceBottom"].ToString());
+                if (WorkSpaceTop_==1)
+                {
+                    ls.Add(devname+"上横梁上空间");
+                }
+                if (WorkSpaceMidUp_ == 1)
+                {
+                    ls.Add(devname + "中横梁上空间");
+                }
+                if (WorkSpaceMidDown_ == 1)
+                {
+                    ls.Add(devname + "中横梁下空间");
+                }
+                if (WorkSpaceBottom_ == 1)
+                {
+                    ls.Add(devname + "下横梁下空间");
+                }
+            }
+            mycon.Close();
+            return ls;
         }
 
         public static void InitShowValuePanel()
@@ -281,36 +343,28 @@ namespace MDCTest2016
                 s2[i] = UnitName[ChannelOfShowValuePanel[i]];
                 cn[i] = ChannelOfShowValuePanel[i];
             }
-            ShowValuePanel = new ShowValueGrid(ChannelOfShowValuePanel.Count, s1, s2,cn);
+            ShowValuePanel = new ShowValueGrid(ChannelOfShowValuePanel.Count, s1, s2, cn);
         }
 
         public static double GetValue(int Channel)
         {
-            switch (CaliMode[Channel])
+            if (CaliMode[Channel] == 1)
             {
-                case 0:
-                    {
-                        return (Datas.Code[Channel]-Datas.Zero[Channel])*Sensor.ScaleValue[Channel]*Math.Pow(-1,Datas.Symbol[Channel]);
-                    }
-                case 1:
-                    {
-                        return -1;
-                    }
-                default:
-                    {
-                        return -1;
-                    }
+                return -1;
+            }
+            else
+            {
+                return (Datas.Code[Channel] - Datas.Zero[Channel]) * Sensor.ScaleValue[Channel] * Math.Pow(-1, Datas.Symbol[Channel]);
             }
         }
 
-        
         /// <summary>
         /// 由值得到码
         /// </summary>
         /// <param name="value">需要求码的值</param>
         /// <param name="ch">通道号</param>
         /// <returns></returns>
-        public static int GetCode(double value,int ch)
+        public static int GetCode(double value, int ch)
         {
             if (CaliMode[ch] == 0)
             {
@@ -319,7 +373,6 @@ namespace MDCTest2016
             else
             {
                 return -1;
-                //return GetCodeFromCaliList(v, ch);
             }
         }
     }

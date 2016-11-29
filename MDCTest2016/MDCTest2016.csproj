@@ -73,6 +73,7 @@
     <Compile Include="Paint.cs" />
     <Compile Include="Sensor.cs" />
     <Compile Include="ShowValueGrid.cs" />
+    <Compile Include="TestRunContrl.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

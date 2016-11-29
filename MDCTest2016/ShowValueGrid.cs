@@ -36,6 +36,7 @@ namespace MDCTest2016
 
     class ValueGrid : System.Windows.Controls.Grid
     {
+        public int NameAndUnitFontSize;
         public Label ValueLabel;
         public Label MaxValueLabel;
         public Label MiniValueLabel;
@@ -49,6 +50,7 @@ namespace MDCTest2016
 
         public ValueGrid(string ChannelName,string ChannelUnit)
         {
+            NameAndUnitFontSize = 12;
             _ChannelName = ChannelName;
             _ChannelUnit = ChannelUnit;
             this.ValueLabel = new Label();
@@ -75,9 +77,9 @@ namespace MDCTest2016
             this.ColumnDefinitions.Add(new ColumnDefinition());
             this.ColumnDefinitions.Add(new ColumnDefinition());
             this.ColumnDefinitions.Add(new ColumnDefinition());
-            this.ColumnDefinitions[0].Width = new System.Windows.GridLength(70, System.Windows.GridUnitType.Star);
-            this.ColumnDefinitions[1].Width = new System.Windows.GridLength(15, System.Windows.GridUnitType.Star);
-            this.ColumnDefinitions[2].Width = new System.Windows.GridLength(15, System.Windows.GridUnitType.Star);
+            this.ColumnDefinitions[0].Width = new System.Windows.GridLength(50, System.Windows.GridUnitType.Star);
+            this.ColumnDefinitions[1].Width = new System.Windows.GridLength(25, System.Windows.GridUnitType.Star);
+            this.ColumnDefinitions[2].Width = new System.Windows.GridLength(25, System.Windows.GridUnitType.Star);
 
             
 
@@ -99,21 +101,23 @@ namespace MDCTest2016
 
             Grid tmg;
             tmg = new Grid();
-            tmg.Margin = new Thickness(4, 4, 4, 4);
+            tmg.Margin = new Thickness(4, 4, 4, 0);
             tmg.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xd1, 0xee, 0xee));
             tmg.Children.Add(ChannelNameLabel);
             tmg.SetValue(Grid.ColumnProperty, 0);
             tmg.SetValue(Grid.RowProperty, 0);
             ChannelNameLabel.Content = _ChannelName;
+            ChannelNameLabel.FontSize = NameAndUnitFontSize;
             ng.Children.Add(tmg);
 
             tmg = new Grid();
-            tmg.Margin = new Thickness(4, 4, 4, 4);
+            tmg.Margin = new Thickness(4, 0, 4, 4);
             tmg.Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(0xd1, 0xee, 0xee));
             tmg.SetValue(Grid.ColumnProperty, 0);
             tmg.SetValue(Grid.RowProperty, 1);
             tmg.Children.Add(ChannelUnitLabel);
             ChannelUnitLabel.Content = _ChannelUnit;
+            ChannelUnitLabel.FontSize = NameAndUnitFontSize;
             ng.Children.Add(tmg);
 
             this.Children.Add(ng);

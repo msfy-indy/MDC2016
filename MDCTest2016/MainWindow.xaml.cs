@@ -29,9 +29,27 @@ namespace MDCTest2016
             InitSoftware();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ReInitUI();
+            InitTestProjectComboBox();
+            InitLoadSensorComboBox();
+            InitFlexGrids();
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ReInitUI();
+        }
+
         private void InitSoftware()
         {
             this.Icon = new BitmapImage(new Uri("./icon/MainWindowLogo.ico", UriKind.RelativeOrAbsolute));
+            //this.RunStopGrid.Background = new ImageBrush(new BitmapImage(new Uri("./bmp./StopRun.bmp", UriKind.RelativeOrAbsolute)));
+            /*
+            this.StartRunGrid.Background = new ImageBrush(new BitmapImage(new Uri("./bmp./StartRun.bmp", UriKind.RelativeOrAbsolute)));
+            this.ProtectTestGrid.Background= new ImageBrush(new BitmapImage(new Uri("./bmp./ProtectTest.bmp", UriKind.RelativeOrAbsolute)));
+            */
             Sensor.InitMachine();
             Sensor.ShowValuePanel.SetValue(Grid.ColumnProperty, 0);
             Sensor.ShowValuePanel.SetValue(Grid.RowProperty, 2);
@@ -65,6 +83,109 @@ namespace MDCTest2016
             timer.Interval = TimeSpan.FromMilliseconds(100);
             timer.Tick += this.RefreshUI;
             timer.Start();
+        }
+
+        private void InitLoadSensorComboBox()
+        {
+            foreach (var item in Sensor.AddLoadSensorListToCombox())
+            {
+                this.LoadSensorComboBox.Items.Add(item);
+            };
+        }
+
+        private void InitTestProjectComboBox()
+        {
+            System.IO.DirectoryInfo TheFolder = new System.IO.DirectoryInfo("./TestProject");
+            foreach (var item in TheFolder.GetFiles())
+            {
+                this.TestProjectComboBox.Items.Add(item.Name);
+            }
+            if (TestProjectComboBox.Items.Count >= TestRunContrl.TestProjectSelectedIndex)
+            {
+                TestProjectComboBox.SelectedIndex = TestRunContrl.TestProjectSelectedIndex;
+            }
+            else
+            {
+                if (TestProjectComboBox.Items.Count > 0)
+                {
+                    TestProjectComboBox.SelectedIndex = 0;
+                }
+            }
+        }
+
+        private void ReInitUI()
+        {
+            this.TestTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
+            this.ReportTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
+            this.MachineTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
+            this.TestingTabBtn.Height = (this.MainGrid.ActualHeight - 46) / 2;
+            this.TestProjectTabBtn.Height = (this.MainGrid.ActualHeight - 46) / 2;
+            this.TestingTabBtn.Header = "试\n验\n管\n理";
+            this.TestProjectTabBtn.Header = "试\n验\n方\n案";
+            this.TestProjectTabItem1.Width = (this.MainGrid.ActualWidth - 60) / 4;
+            this.TestProjectTabItem2.Width = (this.MainGrid.ActualWidth - 60) / 4;
+            this.TestProjectTabItem3.Width = (this.MainGrid.ActualWidth - 60) / 4;
+            this.TestProjectTabItem4.Width = (this.MainGrid.ActualWidth - 60) / 4;
+            this.ReportTabControlItem1.Height = (this.MainGrid.ActualHeight - 46) / 2;
+            this.ReportTabControlItem2.Height = (this.MainGrid.ActualHeight - 46) / 2;
+            this.ReportTabControlItem1.Header = "报\n告\n管\n理";
+            this.ReportTabControlItem2.Header = "曲\n线\n分\n析";
+            this.MachineControlItem1.Height = (this.MainGrid.ActualHeight - 46) / 5;
+            this.MachineControlItem2.Height = (this.MainGrid.ActualHeight - 46) / 5;
+            this.MachineControlItem3.Height = (this.MainGrid.ActualHeight - 46) / 5;
+            this.MachineControlItem4.Height = (this.MainGrid.ActualHeight - 46) / 5;
+            this.MachineControlItem5.Height = (this.MainGrid.ActualHeight - 46) / 5;
+            this.MachineControlItem1.Header = "设\n备";
+            this.MachineControlItem2.Header = "校\n准";
+            this.MachineControlItem3.Header = "检\n定";
+            this.MachineControlItem4.Header = "测\n控\n器";
+            this.MachineControlItem5.Header = "附\n件";
+            this.CaliTabItem1.Width = (this.MainGrid.ActualWidth - 60) / 5;
+            this.CaliTabItem2.Width = (this.MainGrid.ActualWidth - 60) / 5;
+            this.CaliTabItem3.Width = (this.MainGrid.ActualWidth - 60) / 5;
+            this.CaliTabItem4.Width = (this.MainGrid.ActualWidth - 60) / 5;
+            this.CaliTabItem5.Width = (this.MainGrid.ActualWidth - 60) / 5;
+            System.Threading.ThreadPool.QueueUserWorkItem(InitPaint, null);
+        }
+
+        private void InitPaint(object o)
+        {
+            while (true)
+            {
+                if (CurvePictureBoxGrid.ActualHeight > 0)
+                {
+                    CurvePictureBox.Image = new Bitmap((int)CurvePictureBoxGrid.ActualWidth, (int)CurvePictureBoxGrid.ActualHeight);
+                    paint.xIndex[0] = 1;
+                    paint.yIndex[0] = 0;
+                    paint.xDeviceOrg[0] = 24;
+                    paint.yDeviceOrg[0] = 24;
+                    paint.p[0] = this.CurvePictureBox;
+                    paint.StaticG[0] = paint.p[0].CreateGraphics();
+                    paint.StaticImgG[0] = System.Drawing.Graphics.FromImage(paint.p[0].Image);
+                    paint.initPicture(0, false, (float)0.01, 1, true);
+                    break;
+                }
+                else
+                {
+                    System.Threading.Thread.Sleep(200);
+                }
+            }
+
+        }
+
+        private void InitFlexGrids()
+        {
+            this.TestStepFlexGrid.Column(0).Width = 42;
+            this.TestStepFlexGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 62);
+            this.TestStepFlexGrid.Cell(0, 0).Text = "步骤号";
+            this.TestStepFlexGrid.Cell(0, 1).Text = "内容";
+
+            this.InputGrid.Column(0).Width = 100;
+            this.InputGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 120);
+            this.InputGrid.Cell(0, 0).Text = "输入项";
+            this.InputGrid.Cell(0, 1).Text = "内容";
+
+            this.ResultGrid.Column(0).Width = 100;
         }
 
         public void RefreshUI(object sender, EventArgs e)
@@ -166,93 +287,7 @@ namespace MDCTest2016
             }
             
         }
-
-        private void ReInitUI()
-        {
-            this.TestTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
-            this.ReportTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
-            this.MachineTabBtn.Width = (this.MainGrid.ActualWidth - 10) / 3;
-            this.TestingTabBtn.Height = (this.MainGrid.ActualHeight - 46) / 2;
-            this.TestProjectTabBtn.Height = (this.MainGrid.ActualHeight - 46) / 2;
-            this.TestingTabBtn.Header = "试\n验\n管\n理";
-            this.TestProjectTabBtn.Header = "试\n验\n方\n案";
-            this.TestProjectTabItem1.Width = (this.MainGrid.ActualWidth - 60) / 4;
-            this.TestProjectTabItem2.Width = (this.MainGrid.ActualWidth - 60) / 4;
-            this.TestProjectTabItem3.Width = (this.MainGrid.ActualWidth - 60) / 4;
-            this.TestProjectTabItem4.Width = (this.MainGrid.ActualWidth - 60) / 4;
-            this.ReportTabControlItem1.Height = (this.MainGrid.ActualHeight - 46) / 2;
-            this.ReportTabControlItem2.Height = (this.MainGrid.ActualHeight - 46) / 2;
-            this.ReportTabControlItem1.Header = "报\n告\n管\n理";
-            this.ReportTabControlItem2.Header = "曲\n线\n分\n析";
-            this.MachineControlItem1.Height = (this.MainGrid.ActualHeight - 46) / 5;
-            this.MachineControlItem2.Height = (this.MainGrid.ActualHeight - 46) / 5;
-            this.MachineControlItem3.Height = (this.MainGrid.ActualHeight - 46) / 5;
-            this.MachineControlItem4.Height = (this.MainGrid.ActualHeight - 46) / 5;
-            this.MachineControlItem5.Height = (this.MainGrid.ActualHeight - 46) / 5;
-            this.MachineControlItem1.Header = "设\n备";
-            this.MachineControlItem2.Header = "校\n准";
-            this.MachineControlItem3.Header = "检\n定";
-            this.MachineControlItem4.Header = "测\n控\n器";
-            this.MachineControlItem5.Header = "附\n件";
-            this.CaliTabItem1.Width = (this.MainGrid.ActualWidth - 60) / 5;
-            this.CaliTabItem2.Width = (this.MainGrid.ActualWidth - 60) / 5;
-            this.CaliTabItem3.Width = (this.MainGrid.ActualWidth - 60) / 5;
-            this.CaliTabItem4.Width = (this.MainGrid.ActualWidth - 60) / 5;
-            this.CaliTabItem5.Width = (this.MainGrid.ActualWidth - 60) / 5;
-            System.Threading.ThreadPool.QueueUserWorkItem(InitPaint, null);
-        }
-
-        private void InitPaint(object o)
-        {
-            while (true)
-            {
-                if (CurvePictureBoxGrid.ActualHeight > 0)
-                {
-                    CurvePictureBox.Image = new Bitmap((int)CurvePictureBoxGrid.ActualWidth, (int)CurvePictureBoxGrid.ActualHeight);
-                    paint.xIndex[0] = 1;
-                    paint.yIndex[0] = 0;
-                    paint.xDeviceOrg[0] = 24;
-                    paint.yDeviceOrg[0] = 24;
-                    paint.p[0] = this.CurvePictureBox;
-                    paint.StaticG[0] = paint.p[0].CreateGraphics();
-                    paint.StaticImgG[0] = System.Drawing.Graphics.FromImage(paint.p[0].Image);
-                    paint.initPicture(0, false, (float)0.01, 1, true);
-                    break;
-                }
-                else
-                {
-                    System.Threading.Thread.Sleep(200);
-                }
-            }
-            
-        }
-
-        private void InitFlexGrids()
-        {
-            this.TestStepFlexGrid.Column(0).Width = 42;
-            this.TestStepFlexGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 62);
-            this.TestStepFlexGrid.Cell(0, 0).Text = "步骤号";
-            this.TestStepFlexGrid.Cell(0, 1).Text = "内容";
-
-            this.InputGrid.Column(0).Width = 100;
-            this.InputGrid.Column(1).Width = (short)(this.TestStepFlexGrid.Width - 120);
-            this.InputGrid.Cell(0, 0).Text = "输入项";
-            this.InputGrid.Cell(0, 1).Text = "内容";
-
-            this.ResultGrid.Column(0).Width = 100;
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ReInitUI();
-            InitFlexGrids();
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ReInitUI();
-        }
-
+        
         private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
             Datas.IsCali = !Datas.IsCali;
@@ -260,9 +295,26 @@ namespace MDCTest2016
             //System.Environment.Exit(0);
         }
 
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        private void StopRunBtnGrid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Cmd.StopRun();
+            //Cmd.StopRun();
+            //TestProjectTabControl
+        }
+
+        private void TestProjectTabControlNext(object sender, RoutedEventArgs e)
+        {
+            TestProjectTabControl.SelectedIndex = TestProjectTabControl.SelectedIndex + 1;
+        }
+
+        private void ClearAllTestProjectTabAndBack(object sender, RoutedEventArgs e)
+        {
+            TestProjectTabControl.SelectedIndex = 0;
+            TestTabControl.SelectedIndex = 0;
+        }
+
+        private void TestProjectComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //读取试验方案
         }
     }
 }
